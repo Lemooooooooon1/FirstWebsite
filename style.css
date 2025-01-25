@@ -77,3 +77,96 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+/* Style for the Valentine message */
+#valentineMessage {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Arial', sans-serif;
+    color: #D50000; /* Red color */
+    margin-top: 20px;
+}
+
+/* Style for the Yes and No buttons */
+#yesButton, #noButton {
+    font-size: 1.5em;
+    font-family: 'Arial', sans-serif;
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Specific style for the Yes button */
+#yesButton {
+    background-color: #FF4081; /* Pink color */
+    color: white;
+}
+
+#yesButton:hover {
+    background-color: #F50057; /* Darker pink */
+    transform: scale(1.1);
+}
+
+/* Specific style for the No button */
+#noButton {
+    background-color: #FF5722; /* Orange color */
+    color: white;
+}
+
+#noButton:hover {
+    background-color: #FF3D00; /* Darker orange */
+    transform: scale(1.1);
+}
+
+/* Add some padding and center the buttons */
+#yesButton, #noButton {
+    display: inline-block;
+    margin: 10px 20px;
+}
+
+/* Basic styling for the graph and inputs */
+#graphCanvas {
+    border: 2px solid #888;
+    margin-top: 20px;
+}
+
+/* Hide elements when Valentine message is shown */
+#valentineMessage, #yesButton, #noButton {
+    display: none; /* Initially hidden */
+}
+
+#functionInput1, #functionInput2, #functionInput3, #functionInput4, #clearButton, #plotButton {
+    display: block; /* Initially shown */
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid #888;
+    border-radius: 4px;
+}
+
+/* Styling for the input fields */
+#functionInput1, #functionInput2, #functionInput3, #functionInput4 {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Style for the Clear and Plot buttons */
+#clearButton, #plotButton {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #0288D1; /* Blue */
+    color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#clearButton:hover, #plotButton:hover {
+    background-color: #0277BD; /* Darker blue */
+    transform: scale(1.1);
+}
+
