@@ -1,172 +1,60 @@
-﻿body {
+/* Global Styles */
+body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
     padding: 0;
-}
-
-h1 {
-    margin-top: 20px;
-}
-
-#controls {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
 
-    #controls input {
-        width: 80%;
-        max-width: 500px; /* Increased width */
-        padding: 12px; /* Increased padding for bigger input */
-        margin: 8px 0; /* Adjusted spacing between inputs */
-        font-size: 18px; /* Increased font size for better readability */
-        border: 2px solid #ccc; /* Thicker border */
-        border-radius: 8px; /* Rounded corners */
-        box-sizing: border-box; /* Ensures padding doesn't affect width */
-    }
-
-    #controls button {
-        padding: 12px 24px; /* Larger button */
-        margin: 10px 5px;
-        font-size: 16px;
-        cursor: pointer;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        background-color: #4CAF50;
-        color: white;
-    }
-
-        #controls button:hover {
-            background-color: #45a049;
-        }
-
-#graphCanvas {
+h1 {
+    font-size: 2rem;
     margin-top: 20px;
-    border: 2px solid #ccc; /* Slightly thicker border for the canvas */
-    background-color: #f9f9f9;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-#graphCanvas {
-    border: 1px solid #000;
-    width: 1000px; /* Larger graph area */
-    height: 800px; /* Larger graph area */
-}
-
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
 }
 
 #controls {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
 }
 
-input[type="text"] {
-    font-size: 16px;
+input {
     padding: 10px;
-    width: 300px;
-    margin-right: 10px;
+    margin: 10px;
+    width: 200px;
+    font-size: 1rem;
 }
 
 button {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-}
-/* Style for the Valentine message */
-#valentineMessage {
-    text-align: center;
-    font-size: 2em;
-    font-family: 'Arial', sans-serif;
-    color: #D50000; /* Red color */
-    margin-top: 20px;
-}
-
-/* Style for the Yes and No buttons */
-#yesButton, #noButton {
-    font-size: 1.5em;
-    font-family: 'Arial', sans-serif;
-    padding: 15px 30px;
-    margin: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-/* Specific style for the Yes button */
-#yesButton {
-    background-color: #FF4081; /* Pink color */
-    color: white;
-}
-
-#yesButton:hover {
-    background-color: #F50057; /* Darker pink */
-    transform: scale(1.1);
-}
-
-/* Specific style for the No button */
-#noButton {
-    background-color: #FF5722; /* Orange color */
-    color: white;
-}
-
-#noButton:hover {
-    background-color: #FF3D00; /* Darker orange */
-    transform: scale(1.1);
-}
-
-/* Add some padding and center the buttons */
-#yesButton, #noButton {
-    display: inline-block;
-    margin: 10px 20px;
-}
-
-/* Basic styling for the graph and inputs */
-#graphCanvas {
-    border: 2px solid #888;
-    margin-top: 20px;
-}
-
-/* Hide elements when Valentine message is shown */
-#valentineMessage, #yesButton, #noButton {
-    display: none; /* Initially hidden */
-}
-
-#functionInput1, #functionInput2, #functionInput3, #functionInput4, #clearButton, #plotButton {
-    display: block; /* Initially shown */
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 1em;
-    font-family: 'Arial', sans-serif;
-    border: 1px solid #888;
-    border-radius: 4px;
-}
-
-/* Styling for the input fields */
-#functionInput1, #functionInput2, #functionInput3, #functionInput4 {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-/* Style for the Clear and Plot buttons */
-#clearButton, #plotButton {
-    font-size: 1.2em;
     padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
+    font-size: 1rem;
+    margin: 10px;
     cursor: pointer;
-    background-color: #0288D1; /* Blue */
+}
+
+button:hover {
+    background-color: #007BFF;
     color: white;
-    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#clearButton:hover, #plotButton:hover {
-    background-color: #0277BD; /* Darker blue */
-    transform: scale(1.1);
+/* Graph Canvas */
+#graphCanvas {
+    border: 1px solid #000;
+    margin-top: 20px;
 }
 
+/* Responsive Design */
+@media (max-width: 600px) {
+    #controls {
+        flex-direction: column;
+    }
+
+    input, button {
+        width: 150px;
+    }
+}
