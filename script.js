@@ -74,10 +74,10 @@ function isHeartShape(functions, heartFunctions) {
 function drawHeartShape() {
     // Define the functions for the heart shape (top and bottom curves)
     const heartFunctions = [
-        (x) => Math.sqrt(1 - x * x) - Math.pow(x * x, 0.5),  // top-left curve
-        (x) => Math.sqrt(1 - x * x) + Math.pow(x * x, 0.5),  // top-right curve
-        (x) => -Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),  // bottom-left curve
-        (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)   // bottom-right curve
+        (x) => -Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x)   // top-left curve
+        (x) =>  Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),  // top-right curve
+        (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x),  // bottom-left curve
+        (x) =>  Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)   // bottom-right curve
     ];
 
     // Reset Y-range to fit the heart shape
