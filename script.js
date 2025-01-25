@@ -78,7 +78,13 @@ function adjustYRange(func) {
         if (y > maxY) maxY = y;
     }
 
-    yMin = minY - 1;
+    // Adjust the Y-range to ensure the top of the heart is on top
+    if (minY < 0) {
+        yMin = -1.5; // Ensure it doesn't dip too low
+    } else {
+        yMin = minY - 1;
+    }
+
     yMax = maxY + 1;
 }
 
@@ -115,6 +121,7 @@ function drawGraph(func, color) {
 
     ctx.stroke();
 }
+
 
 // Initial draw to display axes
 drawAxes();
