@@ -39,12 +39,13 @@ function plotGraph() {
     ];
 
     const colors = ["blue", "red", "green", "purple"];
-
+     let heartButtonVisible = false;
     try {
         // Check if the heart functions are entered
         if (isHeartShape(functions)) {
-            window.location.href = "Valentines.html"; // Redirect to another page
-            return; // Prevent further execution
+            heartButtonVisible = true;
+            showValentineMessage(); // Show the "Would you be my valentine?" message
+            plotHeartShape(); // Plot the heart shape on the graph
         }
 
         // For each function, process and plot
@@ -136,7 +137,30 @@ function drawGraph(func, color) {
 
     ctx.stroke();
 }
+function showValentineMessage() {
+    // Hide all elements other than the message and buttons
+    document.getElementById("functionInput1").style.display = "none";
+    document.getElementById("functionInput2").style.display = "none";
+    document.getElementById("functionInput3").style.display = "none";
+    document.getElementById("functionInput4").style.display = "none";
+    document.getElementById("clearButton").style.display = "none";
+    document.getElementById("plotButton").style.display = "none";
+    document.getElementById("graphCanvas").style.display = "none";
+    
+    // Show the valentine message and the buttons
+    document.getElementById("valentineMessage").style.display = "block";
+    document.getElementById("yesButton").style.display = "block";
+    document.getElementById("noButton").style.display = "block";
+}
 
+// Event listeners for the "Yes" and "No" buttons
+document.getElementById("yesButton").addEventListener("click", () => {
+    alert("Thank you! Happy Valentine's Day! 💖");
+});
+
+document.getElementById("noButton").addEventListener("click", () => {
+    alert("Sorry, maybe next year! 😢");
+});
 // Initial draw to display axes
 drawAxes();
 
