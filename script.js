@@ -8,7 +8,6 @@ let xMin = -2;
 let xMax = 2;
 let yMin = -2;
 let yMax = 2;
-let dragStart = null;  // For panning
 
 // Clear the canvas
 function clearCanvas() {
@@ -39,15 +38,8 @@ function plotGraph() {
     ];
 
     const colors = ["blue", "red", "green", "purple"];
-     let heartButtonVisible = false;
-    try {
-        // Check if the heart functions are entered
-        if (isHeartShape(functions)) {
-            heartButtonVisible = true;
-            showValentineMessage(); // Show the "Would you be my valentine?" message
-            plotHeartShape(); // Plot the heart shape on the graph
-        }
 
+    try {
         // For each function, process and plot
         for (let i = 0; i < functions.length; i++) {
             if (functions[i].trim() !== "") {
@@ -65,20 +57,6 @@ function plotGraph() {
     } catch (err) {
         alert("Invalid input! Please check your function.");
     }
-}
-
-// Check if the entered functions are the heart shape functions
-function isHeartShape(functions) {
-    const heartFunctions = [
-        "y = x^0.5 - sqrt(1 - x^2)",
-        "y = (-x)^0.5 - sqrt(1 - x^2)",
-        "y = x^0.5 + sqrt(1 - x^2)",
-        "y = (-x)^0.5 + sqrt(1 - x^2)"
-    ];
-
-    // Check if all four functions match the heart functions (case insensitive)
-    const lowerCaseFunctions = functions.map(f => f.trim().toLowerCase());
-    return heartFunctions.every((hf) => lowerCaseFunctions.includes(hf.toLowerCase()));
 }
 
 // Adjust the Y-range dynamically based on the graph's values
@@ -137,30 +115,7 @@ function drawGraph(func, color) {
 
     ctx.stroke();
 }
-function showValentineMessage() {
-    // Hide all elements other than the message and buttons
-    document.getElementById("functionInput1").style.display = "none";
-    document.getElementById("functionInput2").style.display = "none";
-    document.getElementById("functionInput3").style.display = "none";
-    document.getElementById("functionInput4").style.display = "none";
-    document.getElementById("clearButton").style.display = "none";
-    document.getElementById("plotButton").style.display = "none";
-    document.getElementById("graphCanvas").style.display = "none";
-    
-    // Show the valentine message and the buttons
-    document.getElementById("valentineMessage").style.display = "block";
-    document.getElementById("yesButton").style.display = "block";
-    document.getElementById("noButton").style.display = "block";
-}
 
-// Event listeners for the "Yes" and "No" buttons
-document.getElementById("yesButton").addEventListener("click", () => {
-    alert("Thank you! Happy Valentine's Day! 💖");
-});
-
-document.getElementById("noButton").addEventListener("click", () => {
-    alert("Sorry, maybe next year! 😢");
-});
 // Initial draw to display axes
 drawAxes();
 
