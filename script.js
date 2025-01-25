@@ -1,4 +1,4 @@
-﻿const canvas = document.getElementById("graphCanvas");
+const canvas = document.getElementById("graphCanvas");
 const ctx = canvas.getContext("2d");
 
 // Graph dimensions and scaling
@@ -29,21 +29,6 @@ function drawAxes() {
     ctx.stroke();
 }
 
-// Check if the entered functions match the heart criteria
-function isHeartShape(functions) {
-    const heartFunctions = [
-        "y = x^0.5 - sqrt(1 - x^2)",
-        "y = (-x)^0.5 - sqrt(1 - x^2)",
-        "y = x^0.5 + sqrt(1 - x^2)",
-        "y = (-x)^0.5 + sqrt(1 - x^2)"
-    ];
-
-    // Sort and compare the functions to match the heart shape pattern
-    const sortedFunctions = functions.map(func => func.replace(/\s+/g, '').toLowerCase()).sort();
-    const sortedHeartFunctions = heartFunctions.map(func => func.replace(/\s+/g, '').toLowerCase()).sort();
-    return JSON.stringify(sortedFunctions) === JSON.stringify(sortedHeartFunctions);
-}
-
 // Plot the graph based on the user's functions
 function plotGraph() {
     const functions = [
@@ -55,45 +40,67 @@ function plotGraph() {
 
     const colors = ["blue", "red", "green", "purple"];
 
-    // Check if the functions match the heart pattern
-    if (isHeartShape(functions)) {
-       
-        plotHeartShape();
-    } else {
-        // Otherwise, plot the entered functions normally
-        try {
-            for (let i = 0; i < functions.length; i++) {
-                if (functions[i].trim() !== "") {
-                    let sanitizedInput = functions[i].replace(/y\s*=\s*/i, "");
-                    sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
-                    const parsedFunction = (x) => eval(sanitizedInput);
-
-                    // Draw the graph for this function
-                    drawGraph(parsedFunction, colors[i]);
-                }
-            }
-        } catch (err) {
-            alert("Invalid input! Please check your function.");
+    try {
+        // Check if the heart functions are entered
+        if (isHeartShape(functions)) {
+            window.location.href = "heartPage.html"; // Redirect to another page
+            return; // Prevent further execution
         }
+
+        // For each function, process and plot
+        for (let i = 0; i < functions.length; i++) {
+            if (functions[i].trim() !== "") {
+                let sanitizedInput = functions[i].replace(/y\s*=\s*/i, "");
+                sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
+                const parsedFunction = (x) => eval(sanitizedInput);
+
+                // Adjust Y-range dynamically for each function
+                adjustYRange(parsedFunction);
+
+                // Draw the graph for this function
+                drawGraph(parsedFunction, colors[i]);
+            }
+        }
+    } catch (err) {
+        alert("Invalid input! Please check your function.");
     }
 }
 
-// Plot the heart shape by drawing the specific four functions
-function plotHeartShape() {
+// Check if the entered functions are the heart shape functions
+function isHeartShape(functions) {
     const heartFunctions = [
-        "x^0.5 - sqrt(1 - x^2)",
-        "(-x)^0.5 - sqrt(1 - x^2)",
-        "x^0.5 + sqrt(1 - x^2)",
-        "(-x)^0.5 + sqrt(1 - x^2)"
+        "y = x^0.5 - sqrt(1 - x^2)",
+        "y = (-x)^0.5 - sqrt(1 - x^2)",
+        "y = x^0.5 + sqrt(1 - x^2)",
+        "y = (-x)^0.5 + sqrt(1 - x^2)"
     ];
 
-    const colors = ["blue", "red", "green", "purple"];
+    // Check if all four functions match the heart functions (case insensitive)
+    const lowerCaseFunctions = functions.map(f => f.trim().toLowerCase());
+    return heartFunctions.every((hf) => lowerCaseFunctions.includes(hf.toLowerCase()));
+}
 
-    heartFunctions.forEach((funcStr, index) => {
-        let sanitizedInput = funcStr.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
-        const parsedFunction = (x) => eval(sanitizedInput);
-        drawGraph(parsedFunction, colors[index]);
-    });
+// Adjust the Y-range dynamically based on the graph's values
+function adjustYRange(func) {
+    let minY = Infinity;
+    let maxY = -Infinity;
+
+    for (let i = 0; i < width; i++) {
+        const x = xMin + (i / width) * (xMax - xMin);
+        let y;
+
+        try {
+            y = func(x);
+        } catch {
+            continue;
+        }
+
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+    }
+
+    yMin = minY - 1;
+    yMax = maxY + 1;
 }
 
 // Draw the graph on the canvas for a specific function and color
@@ -132,8 +139,6 @@ function drawGraph(func, color) {
 
 // Initial draw to display axes
 drawAxes();
-
-// Panning functionality (dragging the mouse) is removed as requested
 
 // Zooming functionality (mouse wheel)
 canvas.addEventListener("wheel", (e) => {
