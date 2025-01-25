@@ -80,10 +80,14 @@ function drawHeartShape() {
         (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)   // bottom-right curve
     ];
 
+    // Reset Y-range to fit the heart shape
+    yMin = -2;
+    yMax = 2;
+
     // Plot the heart shape by adjusting for the four functions
-    for (let i = 0; i < heartFunctions.length; i++) {
-        drawGraph(heartFunctions[i], getColor(i)); // Draw each part of the heart
-    }
+    heartFunctions.forEach((func, index) => {
+        drawGraph(func, getColor(index)); // Draw each part of the heart
+    });
 }
 
 // Draw the graph on the canvas for a specific function and color
