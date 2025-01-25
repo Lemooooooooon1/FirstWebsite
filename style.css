@@ -1,46 +1,127 @@
+/* General Body Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: linear-gradient(to right, #ff6a00, #ee0979);
 }
 
+/* Heading Styles */
 h1 {
+    color: white;
+    font-size: 36px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Controls Section */
 #controls {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-#controls input {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 30px;
     width: 300px;
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
 }
 
-#controls button {
-    padding: 10px 20px;
-    margin: 5px;
+/* Input and Button Styles */
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    margin: 8px 0;
     font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #ff6a00;
+    outline: none;
+}
+
+button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    background-color: #ff6a00;
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    width: 80%;
+    transition: background-color 0.3s ease;
 }
 
-#controls button:hover {
+button:hover {
+    background-color: #ee0979;
+}
+
+button:active {
+    background-color: #d04847;
+}
+
+/* Canvas Styling */
+canvas {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid #333;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Valentine Message Section */
+#valentineMessage {
+    display: none;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff6a00;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+
+#valentineMessage p {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+button#yesButton,
+button#noButton {
+    font-size: 20px;
+    margin-top: 10px;
+    width: 40%;
+    margin: 0 5px;
+}
+
+#yesButton {
+    background-color: #4CAF50;
+}
+
+#noButton {
+    background-color: #f44336;
+}
+
+#yesButton:hover {
     background-color: #45a049;
 }
 
-canvas {
-    display: block;
-    margin: 0 auto;
-    border: 1px solid #ddd;
+#noButton:hover {
+    background-color: #e53935;
 }
