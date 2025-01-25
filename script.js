@@ -4,11 +4,10 @@ const ctx = canvas.getContext("2d");
 // Graph dimensions and scaling
 const width = canvas.width;
 const height = canvas.height;
-let xMin = -2;
-let xMax = 2;
-let yMin = -2;
-let yMax = 2;
-let dragStart = null;  // For panning
+let xMin = -10;
+let xMax = 10;
+let yMin = -10;
+let yMax = 10;
 
 // Clear the canvas
 function clearCanvas() {
@@ -19,11 +18,16 @@ function clearCanvas() {
 // Draw the X and Y axes
 function drawAxes() {
     ctx.strokeStyle = "#888";
-    ctx.beginPath();
+    ctx.lineWidth = 1;
+
     // X-axis
+    ctx.beginPath();
     ctx.moveTo(0, height / 2);
     ctx.lineTo(width, height / 2);
+    ctx.stroke();
+
     // Y-axis
+    ctx.beginPath();
     ctx.moveTo(width / 2, 0);
     ctx.lineTo(width / 2, height);
     ctx.stroke();
@@ -44,6 +48,22 @@ function isHeartShape(functions) {
     return JSON.stringify(sortedFunctions) === JSON.stringify(sortedHeartFunctions);
 }
 
+// Parse and sanitize a user-provided function
+function parseFunction(input) {
+    try {
+        const sanitizedInput = input
+            .replace(/y\s*=\s*/i, "") // Remove "y ="
+            .replace(/([0-9])([a-zA-Z])/g, "$1*$2") // Add '*' between number and variable (e.g., 2x -> 2*x)
+            .replace(/\^/g, "**") // Replace ^ with **
+            .replace(/sqrt\(/g, "Math.sqrt(") // Replace sqrt with Math.sqrt
+            .replace(/pi/gi, "Math.PI") // Replace pi with Math.PI
+            .replace(/e/gi, "Math.E"); // Replace e with Math.E
+        return (x) => eval(sanitizedInput); // Create a function of x
+    } catch {
+        return null; // Return null if the function is invalid
+    }
+}
+
 // Plot the graph based on the user's functions
 function plotGraph() {
     const functions = [
@@ -57,24 +77,21 @@ function plotGraph() {
 
     // Check if the functions match the heart pattern
     if (isHeartShape(functions)) {
-        // If heart shape detected, plot the functions without alert
-        plotHeartShape();
+        plotHeartShape(); // Plot the heart shape if detected
     } else {
-        // Otherwise, plot the entered functions normally
-        try {
-            for (let i = 0; i < functions.length; i++) {
-                if (functions[i].trim() !== "") {
-                    let sanitizedInput = functions[i].replace(/y\s*=\s*/i, "");
-                    sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
-                    const parsedFunction = (x) => eval(sanitizedInput);
+        clearCanvas(); // Clear canvas before plotting
+        drawAxes(); // Redraw axes
 
-                    // Draw the graph for this function
-                    drawGraph(parsedFunction, colors[i]);
+        functions.forEach((func, index) => {
+            if (func.trim() !== "") {
+                const parsedFunc = parseFunction(func);
+                if (parsedFunc) {
+                    drawGraph(parsedFunc, colors[index]);
+                } else {
+                    console.warn(`Invalid function: ${func}`);
                 }
             }
-        } catch (err) {
-            alert("Invalid input! Please check your function.");
-        }
+        });
     }
 }
 
@@ -89,17 +106,21 @@ function plotHeartShape() {
 
     const colors = ["blue", "red", "green", "purple"];
 
+    clearCanvas(); // Clear canvas before plotting
+    drawAxes(); // Redraw axes
+
     heartFunctions.forEach((funcStr, index) => {
-        let sanitizedInput = funcStr.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
-        const parsedFunction = (x) => eval(sanitizedInput);
-        drawGraph(parsedFunction, colors[index]);
+        const parsedFunc = parseFunction(funcStr);
+        if (parsedFunc) {
+            drawGraph(parsedFunc, colors[index]);
+        }
     });
 }
 
 // Draw the graph on the canvas for a specific function and color
 function drawGraph(func, color) {
     ctx.strokeStyle = color;
-    ctx.lineWidth = 3; // Thicker borders for the function lines
+    ctx.lineWidth = 2; // Thicker line for better visibility
     ctx.beginPath();
 
     let firstPoint = true;
@@ -114,7 +135,7 @@ function drawGraph(func, color) {
             continue;
         }
 
-        const pixelX = i;
+        const pixelX = ((x - xMin) / (xMax - xMin)) * width; // Map graph x to pixel x
         const pixelY = height - ((y - yMin) / (yMax - yMin)) * height; // Map graph y to pixel y
 
         if (pixelY < 0 || pixelY > height) continue;
@@ -133,9 +154,25 @@ function drawGraph(func, color) {
 // Initial draw to display axes
 drawAxes();
 
-// Panning functionality (dragging the mouse) is removed as requested
+// Zooming functionality (mouse wheel)
+canvas.addEventListener("wheel", (e) => {
+    e.preventDefault(); // Prevent default scroll behavior
 
+    const zoomFactor = 1.1; // Zoom in/out factor
+    const zoomDirection = e.deltaY < 0 ? 1 : -1; // Zoom in if wheel scrolls up, out if down
 
-    clearCanvas(); // Clear and redraw after zooming
-    plotGraph(); // Replot the graph with the new range
+    const zoomAmount = zoomDirection === 1 ? zoomFactor : 1 / zoomFactor;
+    const centerX = (xMin + xMax) / 2;
+    const centerY = (yMin + yMax) / 2;
+
+    const newWidth = (xMax - xMin) * zoomAmount;
+    const newHeight = (yMax - yMin) * zoomAmount;
+
+    xMin = centerX - newWidth / 2;
+    xMax = centerX + newWidth / 2;
+    yMin = centerY - newHeight / 2;
+    yMax = centerY + newHeight / 2;
+
+    clearCanvas();
+    plotGraph();
 });
