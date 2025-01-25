@@ -8,6 +8,7 @@ let xMin = -2;
 let xMax = 2;
 let yMin = -2;
 let yMax = 2;
+let dragStart = null;  // For panning
 
 // Clear the canvas
 function clearCanvas() {
@@ -20,12 +21,27 @@ function drawAxes() {
     ctx.strokeStyle = "#888";
     ctx.beginPath();
     // X-axis
-    ctx.moveTo(0, height / 2); // Center of the canvas
-    ctx.lineTo(width, height / 2); // Center line for X-axis
+    ctx.moveTo(0, height / 2);
+    ctx.lineTo(width, height / 2);
     // Y-axis
-    ctx.moveTo(width / 2, 0); // Center of the canvas
-    ctx.lineTo(width / 2, height); // Center line for Y-axis
+    ctx.moveTo(width / 2, 0);
+    ctx.lineTo(width / 2, height);
     ctx.stroke();
+}
+
+// Check if the entered functions match the heart criteria
+function isHeartShape(functions) {
+    const heartFunctions = [
+        "y = x^0.5 - sqrt(1 - x^2)",
+        "y = (-x)^0.5 - sqrt(1 - x^2)",
+        "y = x^0.5 + sqrt(1 - x^2)",
+        "y = (-x)^0.5 + sqrt(1 - x^2)"
+    ];
+
+    // Sort and compare the functions to match the heart shape pattern
+    const sortedFunctions = functions.map(func => func.replace(/\s+/g, '').toLowerCase()).sort();
+    const sortedHeartFunctions = heartFunctions.map(func => func.replace(/\s+/g, '').toLowerCase()).sort();
+    return JSON.stringify(sortedFunctions) === JSON.stringify(sortedHeartFunctions);
 }
 
 // Plot the graph based on the user's functions
@@ -37,56 +53,46 @@ function plotGraph() {
         document.getElementById("functionInput4").value
     ];
 
-    const heartFunctions = [
-        "y = x^0.5 - sqrt(1 - x^2)",
-        "y = (-x)^0.5 + sqrt(1 - x^2)",
-        "y = x^0.5 + sqrt(1 - x^2)",
-        "y = (-x)^0.5 - sqrt(1 - x^2)"
-    ];
+    const colors = ["blue", "red", "green", "purple"];
 
-    // Check if the entered functions match the heart shape equations (in any order)
-    if (isHeartShape(functions, heartFunctions)) {
-        drawHeartShape(); // Plot the heart shape
+    // Check if the functions match the heart pattern
+    if (isHeartShape(functions)) {
+        // If heart shape detected, plot the functions without alert
+        plotHeartShape();
     } else {
-        functions.forEach((func, index) => {
-            if (func.trim() !== "") {
-                let sanitizedInput = func.replace(/y\s*=\s*/i, "");
-                sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
-                const parsedFunction = (x) => eval(sanitizedInput);
+        // Otherwise, plot the entered functions normally
+        try {
+            for (let i = 0; i < functions.length; i++) {
+                if (functions[i].trim() !== "") {
+                    let sanitizedInput = functions[i].replace(/y\s*=\s*/i, "");
+                    sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
+                    const parsedFunction = (x) => eval(sanitizedInput);
 
-                // Adjust Y-range dynamically for each function
-                adjustYRange(parsedFunction);
-
-                // Draw the graph for this function
-                drawGraph(parsedFunction, getColor(index));
+                    // Draw the graph for this function
+                    drawGraph(parsedFunction, colors[i]);
+                }
             }
-        });
+        } catch (err) {
+            alert("Invalid input! Please check your function.");
+        }
     }
 }
 
-// Check if the entered functions match the heart shape functions (in any order)
-function isHeartShape(functions, heartFunctions) {
-    const lowerCaseFunctions = functions.map(f => f.trim().toLowerCase());
-    return heartFunctions.every((hf) => lowerCaseFunctions.includes(hf.toLowerCase()));
-}
-
-// Function to plot the heart shape
-function drawHeartShape() {
-    // Define the functions for the heart shape (top and bottom curves)
+// Plot the heart shape by drawing the specific four functions
+function plotHeartShape() {
     const heartFunctions = [
-        (x) => -Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),   // top-left curve
-        (x) => Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),    // top-right curve
-        (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x),    // bottom-left curve
-        (x) => Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)      // bottom-right curve
+        "x^0.5 - sqrt(1 - x^2)",
+        "(-x)^0.5 - sqrt(1 - x^2)",
+        "x^0.5 + sqrt(1 - x^2)",
+        "(-x)^0.5 + sqrt(1 - x^2)"
     ];
 
-    // Reset Y-range to fit the heart shape
-    yMin = -2;
-    yMax = 2;
+    const colors = ["blue", "red", "green", "purple"];
 
-    // Plot the heart shape by adjusting for the four functions
-    heartFunctions.forEach((func, index) => {
-        drawGraph(func, getColor(index)); // Draw each part of the heart
+    heartFunctions.forEach((funcStr, index) => {
+        let sanitizedInput = funcStr.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
+        const parsedFunction = (x) => eval(sanitizedInput);
+        drawGraph(parsedFunction, colors[index]);
     });
 }
 
@@ -124,34 +130,32 @@ function drawGraph(func, color) {
     ctx.stroke();
 }
 
-// Return the color for each function
-function getColor(index) {
-    const colors = ["red", "blue", "pink", "purple"];
-    return colors[index % colors.length];
-}
-
-// Adjust the Y-range dynamically based on the graph's values
-function adjustYRange(func) {
-    let minY = Infinity;
-    let maxY = -Infinity;
-
-    for (let i = 0; i < width; i++) {
-        const x = xMin + (i / width) * (xMax - xMin);
-        let y;
-
-        try {
-            y = func(x);
-        } catch {
-            continue;
-        }
-
-        if (y < minY) minY = y;
-        if (y > maxY) maxY = y;
-    }
-
-    yMin = minY - 1;
-    yMax = maxY + 1;
-}
-
 // Initial draw to display axes
 drawAxes();
+
+// Panning functionality (dragging the mouse) is removed as requested
+
+// Zooming functionality (mouse wheel)
+canvas.addEventListener("wheel", (e) => {
+    e.preventDefault(); // Prevent default scroll behavior
+
+    const zoomFactor = 1.1; // Zoom in/out factor
+    const zoomDirection = e.deltaY < 0 ? 1 : -1; // Zoom in if wheel scrolls up, out if down
+
+    // Zoom the graph in or out
+    const zoomAmount = zoomDirection === 1 ? zoomFactor : 1 / zoomFactor;
+    const centerX = (xMin + xMax) / 2;
+    const centerY = (yMin + yMax) / 2;
+
+    const widthChange = (xMax - xMin) * (zoomAmount - 1);
+    const heightChange = (yMax - yMin) * (zoomAmount - 1);
+
+    // Update the X and Y ranges based on the zoom
+    xMin += widthChange / 2;
+    xMax -= widthChange / 2;
+    yMin += heightChange / 2;
+    yMax -= heightChange / 2;
+
+    clearCanvas(); // Clear and redraw after zooming
+    plotGraph(); // Replot the graph with the new range
+});
