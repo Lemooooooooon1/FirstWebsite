@@ -135,28 +135,6 @@ drawAxes();
 
 // Panning functionality (dragging the mouse) is removed as requested
 
-// Zooming functionality (mouse wheel)
-
-canvas.addEventListener("wheel", (e) => {
-    e.preventDefault(); // Prevent default scroll behavior
-
-    const zoomFactor = 1.1; // Zoom in/out factor
-    const zoomDirection = e.deltaY < 0 ? 1 : -1; // Zoom in if wheel scrolls up, out if down
-
-    // Calculate the center point of the zoom based on mouse position
-    const mouseX = e.offsetX;
-    const mouseY = e.offsetY;
-    const zoomAmount = zoomDirection === 1 ? zoomFactor : 1 / zoomFactor;
-
-    // Calculate the new ranges for xMin, xMax, yMin, and yMax based on the zoom amount
-    const newWidth = (xMax - xMin) * zoomAmount;
-    const newHeight = (yMax - yMin) * zoomAmount;
-
-    // Adjust the ranges so that the zoom happens centered on the mouse position
-    xMin = xMin + (mouseX / width) * (xMax - xMin) - (mouseX / width) * newWidth;
-    xMax = xMax - (mouseX / width) * (xMax - xMin) + (mouseX / width) * newWidth;
-    yMin = yMin + (mouseY / height) * (yMax - yMin) - (mouseY / height) * newHeight;
-    yMax = yMax - (mouseY / height) * (yMax - yMin) + (mouseY / height) * newHeight;
 
     clearCanvas(); // Clear and redraw after zooming
     plotGraph(); // Replot the graph with the new range
