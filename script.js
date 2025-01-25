@@ -43,7 +43,7 @@ function plotGraph() {
     try {
         // Check if the heart functions are entered
         if (isHeartShape(functions)) {
-            window.location.href = "heartPage.html"; // Redirect to another page
+            window.location.href = "Valentines.html"; // Redirect to another page
             return; // Prevent further execution
         }
 
