@@ -48,7 +48,19 @@ function plotGraph() {
     if (isHeartShape(functions, heartFunctions)) {
         drawHeartShape(); // Plot the heart shape
     } else {
-        alert("Please enter the correct heart shape functions.");
+        functions.forEach((func, index) => {
+            if (func.trim() !== "") {
+                let sanitizedInput = func.replace(/y\s*=\s*/i, "");
+                sanitizedInput = sanitizedInput.replace(/\^/g, "**").replace(/sqrt\(/g, "Math.sqrt(");
+                const parsedFunction = (x) => eval(sanitizedInput);
+
+                // Adjust Y-range dynamically for each function
+                adjustYRange(parsedFunction);
+
+                // Draw the graph for this function
+                drawGraph(parsedFunction, getColor(index));
+            }
+        });
     }
 }
 
@@ -108,10 +120,33 @@ function drawGraph(func, color) {
     ctx.stroke();
 }
 
-// Return the color for each heart function
+// Return the color for each function
 function getColor(index) {
     const colors = ["red", "blue", "pink", "purple"];
     return colors[index % colors.length];
+}
+
+// Adjust the Y-range dynamically based on the graph's values
+function adjustYRange(func) {
+    let minY = Infinity;
+    let maxY = -Infinity;
+
+    for (let i = 0; i < width; i++) {
+        const x = xMin + (i / width) * (xMax - xMin);
+        let y;
+
+        try {
+            y = func(x);
+        } catch {
+            continue;
+        }
+
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+    }
+
+    yMin = minY - 1;
+    yMax = maxY + 1;
 }
 
 // Initial draw to display axes
