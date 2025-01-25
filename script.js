@@ -20,11 +20,11 @@ function drawAxes() {
     ctx.strokeStyle = "#888";
     ctx.beginPath();
     // X-axis
-    ctx.moveTo(0, height / 2);
-    ctx.lineTo(width, height / 2);
+    ctx.moveTo(0, height / 2); // Center of the canvas
+    ctx.lineTo(width, height / 2); // Center line for X-axis
     // Y-axis
-    ctx.moveTo(width / 2, 0);
-    ctx.lineTo(width / 2, height);
+    ctx.moveTo(width / 2, 0); // Center of the canvas
+    ctx.lineTo(width / 2, height); // Center line for Y-axis
     ctx.stroke();
 }
 
@@ -74,10 +74,10 @@ function isHeartShape(functions, heartFunctions) {
 function drawHeartShape() {
     // Define the functions for the heart shape (top and bottom curves)
     const heartFunctions = [
-        (x) => -Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x)   // top-left curve
-        (x) =>  Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),  // top-right curve
-        (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x),  // bottom-left curve
-        (x) =>  Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)   // bottom-right curve
+        (x) => -Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),   // top-left curve
+        (x) => Math.pow(x * x, 0.5) + Math.sqrt(1 - x * x),    // top-right curve
+        (x) => -Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x),    // bottom-left curve
+        (x) => Math.pow(x * x, 0.5) - Math.sqrt(1 - x * x)      // bottom-right curve
     ];
 
     // Reset Y-range to fit the heart shape
