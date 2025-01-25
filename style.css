@@ -1,3 +1,4 @@
+
 /* General Body Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,10 +46,10 @@ input[type="text"] {
     transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus {
-    border-color: #ff6a00;
-    outline: none;
-}
+    input[type="text"]:focus {
+        border-color: #ff6a00;
+        outline: none;
+    }
 
 button {
     padding: 12px 20px;
@@ -63,13 +64,13 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #ee0979;
-}
+    button:hover {
+        background-color: #ee0979;
+    }
 
-button:active {
-    background-color: #d04847;
-}
+    button:active {
+        background-color: #d04847;
+    }
 
 /* Canvas Styling */
 canvas {
@@ -96,11 +97,11 @@ canvas {
     width: 80%;
 }
 
-#valentineMessage p {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
+    #valentineMessage p {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
 
 button#yesButton,
 button#noButton {
