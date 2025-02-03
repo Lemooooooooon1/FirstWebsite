@@ -67,10 +67,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="0dc4b38ee54a0169f5730bcbe4f94d3a.gif" />
+    <Content Include="0fbbcf6b-948a-44c4-84e4-a122d9504f1b.jpeg" />
+    <Content Include="48c9522aaa31a27582216bec737e92ce.gif" />
+    <Content Include="AskValentine.html" />
+    <Content Include="AskValentinesStyle.css" />
+    <Content Include="download %281%29.jpeg" />
+    <Content Include="download %282%29.jpeg" />
+    <Content Include="download.jpeg" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="RestOfPageJavaScript.js" />
     <Content Include="script.js" />
+    <Content Include="She_Said_HomeMade.html" />
+    <Content Include="She_Said_No.html" />
+    <Content Include="She_Said_TakeOut.html" />
+    <Content Include="She_Said_Yes.html" />
     <Content Include="style.css" />
+    <Content Include="TZwA7N.gif" />
+    <Content Include="Valentines.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

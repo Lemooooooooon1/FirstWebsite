@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="RestOfPageJavaScript.js"></script>
+    <title>HELLO :3</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+        }
+
+        .images-container {
+            flex: 1; /* Takes up all available space */
+            display: flex;
+        }
+
+        .half {
+            flex: 1; /* Each half takes up 50% of the width */
+            display: flex;
+            flex-direction: column; /* Stack image and button vertically */
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+            overflow: hidden; /* Prevent content overflow */
+            position: relative; /* Allow positioning of the equations */
+        }
+
+        .left {
+            background-color: blue; /* Optional: Background color for the left */
+        }
+
+        .right {
+            background-color: red; /* Optional: Background color for the right */
+        }
+
+        img {
+            max-width: 100%; /* Scale image to fit width */
+            max-height: 80%; /* Scale image to fit height */
+            object-fit: cover; /* Crop/fit the image within its container */
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 15px; /* Add space between the image and the button */
+            font-size: 16px;
+            color: white;
+            background-color: #3b82f6;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #2563eb; /* Darker blue on hover */
+            }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Styling for the equations */
+        .equation {
+            position: absolute;
+            top: 20px; /* Position it above the image */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px; /* Adjust the font size */
+            color: white; /* White text */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Subtle glow to help it blend */
+            opacity: 0.8; /* Make it slightly transparent to blend in */
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Gali, will you be my Valentine?</h1>
+    </center>
+    <div class="images-container">
+        <!-- Left Section -->
+        <div class="half left">
+            <!-- Equation above the image -->
+            <div class="equation">y = x^0.5 + sqrt(1 - x^2)</div>
+            <img src="48c9522aaa31a27582216bec737e92ce.gif" alt="Left Image">
+            <button onclick="SheSaidYes()">Yes :) </button>
+        </div>
+
+        <!-- Right Section -->
+        <div class="half right">
+            <!-- Equation above the image -->
+            <div class="equation">y = x^0.5 - sqrt(1 - x^2)</div>
+            <img src="0dc4b38ee54a0169f5730bcbe4f94d3a.gif" alt="Right Image">
+            <button onclick="SheSaidNo()">No :( </button>
+        </div>
+    </div>
+</body>
+</html>

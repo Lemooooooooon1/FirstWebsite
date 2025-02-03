@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Food Choice</title>
+    <script>
+        function goToPage(page) {
+            window.location.href = page;
+        }
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #E0B0FF, #29ccc1);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 20px 0;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .images-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .half:hover {
+                transform: scale(1.05);
+            }
+
+        img {
+            width: 400px;
+            height: 400px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s;
+        }
+
+            img:hover {
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+            }
+    </style>
+</head>
+<body>
+    <h1>What food would you like?</h1>
+    <div class="images-container">
+        <!-- Left Section -->
+        <div class="half" onclick="goToPage('She_Said_HomeMade.html')">
+            <h1>HOMEMADE</h1>
+            <img src="0fbbcf6b-948a-44c4-84e4-a122d9504f1b.jpeg" alt="Homemade Food">
+        </div>
+
+        <!-- Right Section -->
+        <div class="half" onclick="goToPage('She_Said_TakeOut.html')">
+            <h1>TAKE OUT</h1>
+            <img src="download (2).jpeg" alt="Takeout Food">
+        </div>
+    </div>
+</body>
+</html>
